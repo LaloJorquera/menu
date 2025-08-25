@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Menu</title>
+
+  <!-- Conexión al CSS -->
+  <link rel="stylesheet" href="css.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="topbar">
+      <div class="brand" aria-label="Mini TikTok">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>Menú</span>
+      </div>
+      <label class="upload" title="Subir video">
+        <input id="uploader" type="file" accept="video/*" />
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M5 20h14a1 1 0 001-1v-7h-2v6H6v-6H4v7a1 1 0 001 1zm7-16l5 5h-3v6h-4v-6H7l5-5z"/></svg>
+        <span class="upload-label">Subir</span>
+      </label>
+    </div>
+
+    <!-- Feed -->
+    <main class="feed" id="feed" tabindex="0" aria-label="Video feed (teclas ↑ ↓ para navegar)"></main>
+
+    <!-- Bottom nav -->
+    <nav class="bottom-nav" aria-label="Navegación">
+      <div class="nav-item active"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Inicio</div>
+      <div class="nav-item"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M9.5 3C5.36 3 2 6.36 2 10.5S5.36 18 9.5 18c2.01 0 3.85-.74 5.26-1.96L20.59 22 22 20.59l-5.34-5.34A7.46 7.46 0 0 0 17 10.5C17 6.36 13.64 3 9.5 3z"/></svg>Buscar</div>
+      <div class="nav-item"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3m0 2.18L6 8v7.82l6 3.38 6-3.38V8l-6-2.82z"/></svg>Bandeja</div>
+      <div class="nav-item"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Perfil</div>
+    </nav>
+
+    <!-- Comments drawer -->
+    <section class="drawer" id="drawer" aria-label="Comentarios">
+      <div class="grab"></div>
+      <div class="list" id="commentsList"></div>
+      <div class="input">
+        <input id="commentInput" type="text" placeholder="Añadir comentario..." />
+        <button id="sendComment" title="Enviar" aria-label="Enviar comentario">
+          <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <template id="cardTemplate">
+    <article class="card" role="group" aria-roledescription="video card">
+      <div class="video-wrap">
+        <video playsinline muted loop preload="metadata" aria-label="Video de usuario"></video>
+      </div>
+      <div class="edge-top"></div>
+      <div class="edge-bottom"></div>
+
+      <div class="actions">
+        <div class="action">
+          <button class="btn like" aria-label="Me gusta">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.1 8.64l-.1.1-.11-.11C10.14 6.6 7.1 6.6 5.14 8.56c-1.96 1.96-1.96 5.14 0 7.1l6.36 6.36 6.36-6.36c1.96-1.96 1.96-5.14 0-7.1-1.96-1.96-5-1.96-6.86 0z"/></svg>
+          </button>
+          <div class="count likes">0</div>
+        </div>
+        <div class="action">
+          <button class="btn comment" aria-label="Comentarios">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+          </button>
+          <div class="count comments">0</div>
+        </div>
+        <div class="action">
+          <button class="btn share" aria-label="Compartir">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.27 3.27 0 0 0 0-1.39l7.02-4.11A2.99 2.99 0 1 0 15 5a3 3 0 0 0 .05.51L8.03 9.62a3 3 0 1 0 0 4.76l7.06 4.14c-.03.16-.05.32-.05.48a3 3 0 1 0 3-2.92z"/></svg>
+          </button>
+          <div class="count shares">Compartir</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <div class="user">
+          <div class="avatar"></div>
+          <div class="name">@usuario</div>
+          <button class="follow" aria-label="Seguir">Seguir</button>
+        </div>
+        <div class="caption"></div>
+        <div class="track">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 5v6.55A3.96 3.96 0 0011 14a4 4 0 100 4 4 4 0 004-4V9h2V7h-4z"/></svg>
+          <div class="marquee"><span></span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="progress" aria-label="Progreso"><div class="bar"></div></div>
+        <button class="mute" aria-label="Silenciar/Reactivar sonido">
+          <svg class="icon-volume" viewBox="0 0 24 24"><path fill="currentColor" d="M5 9v6h4l5 5V4L9 9H5z"/></svg>
+        </button>
+      </div>
+
+      <div class="dbl-like" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path fill="var(--accent)" d="M12.1 8.64l-.1.1-.11-.11C10.14 6.6 7.1 6.6 5.14 8.56c-1.96 1.96-1.96 5.14 0 7.1l6.36 6.36 6.36-6.36c1.96-1.96 1.96-5.14 0-7.1-1.96-1.96-5-1.96-6.86 0z"/></svg>
+      </div>
+    </article>
+  </template>
+</body>
+</html>
+
+<!-- Conexión al JS -->
+<script src="app.js"></script>
